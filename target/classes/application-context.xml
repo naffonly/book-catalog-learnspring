@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<!-- Setter injection -->
+<!--    <bean id="author" class="com.naogrd.domain.Author">-->
+<!--        <property name="id" value="1"></property>-->
+<!--        <property name="name" value="Nao grd navira"></property>-->
+<!--        <property name="birthdate" value="-16401"></property>-->
+<!--    </bean>-->
+
+<!--  Contructor injection  -->
+    <bean id="author" class="com.naogrd.domain.Author">
+        <constructor-arg name="id" value="1"></constructor-arg>
+        <constructor-arg name="birthdate" value="-16401"></constructor-arg>
+        <constructor-arg name="name" value="Nao grd navira"></constructor-arg>
+    </bean>
+
+    <bean id="book1" class="com.naogrd.domain.Book">
+        <property name="id" value="1"></property>
+        <property name="title" value="Titik balik"></property>
+        <property name="decs" value="Kisah mengenai Perjalanan Navira dan alan"></property>
+        <property name="author" ref="author"></property>
+   </bean>
+    <bean id="book2" class="com.naogrd.domain.Book">
+        <property name="id" value="2"></property>
+        <property name="title" value="Fate"></property>
+        <property name="decs" value="Kisah mengenai Perjalanan master dan servant"></property>
+        <property name="author" ref="author"></property>
+    </bean>
+    <bean id="bookRepository" class="com.naogrd.RepositoryImpl.BookRepositoryImpl">
+        <property name="bookMap">
+            <map>
+                <entry key="1" value-ref="book1"></entry>
+                <entry key="2" value-ref="book2"></entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="bookService" class="com.naogrd.BookServiceImpl.BookServiceImpl">
+<!--        <property name="bookRepository" ref="bookRepository"></property>-->
+        <constructor-arg ref="bookRepository"></constructor-arg>
+    </bean>
+</beans>
